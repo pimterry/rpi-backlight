@@ -1,0 +1,31 @@
+{
+  "name": "rpi-backlight",
+  "version": "0.1.0",
+  "description": "A node library to control the backlight of the official Raspberry Pi 7\" touch display",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pimterry/rpi-backlight.git"
+  },
+  "keywords": [
+    "raspberry",
+    "pi",
+    "pi",
+    "backlight",
+    "tft",
+    "pitft",
+    "screen",
+    "power",
+    "brightness",
+    "rpi"
+  ],
+  "author": "Tim Perry <pimterry@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pimterry/rpi-backlight/issues"
+  },
+  "homepage": "https://github.com/pimterry/rpi-backlight#readme"
+}
