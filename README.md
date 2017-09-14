@@ -113,7 +113,7 @@ index.js:
             <li><a href="/screenOff">Screen Off</a></li>
             <li><a href="/getPowerValue">Get screen state</a></li>
             <li><a href="/setBrightness/50">Set Brigthness value to 50</a></li>
-            <li><a href="/goToBrightnessValue/175/880">Go to Brightness value to 175 with low speed (not working....)</a></li>
+            <li><a href="/goToBrightnessValue/15/20">Go to Brightness value to 15 with speed 20</a></li>
             <li><a href="/setMaxBrightness">Set Max Brightness</a></li>
             <li><a href="/getBrightnessValue">Get actual Brightness</a></li>
         </ul>

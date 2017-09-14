@@ -49,26 +49,35 @@ exports.setMaxBrightness = () => {
 };
 
 exports.setBrightnessValue = (value) => {
+  if (value > 255 || value < 0) {
+    return "ERR: Incorrect value";
+  }
   return writeValue('brightness', value);
 };
 
-/** Not working */
 exports.goToBrightnessValue = (toValue, speed) => {
+  if (toValue > 255 || toValue < 0) {
+    return "ERR: Incorrect value";
+  }
   let from = this.getActualBrightness();
   from.then((data) => {
-      if (toValue < data) {
-        while (toValue < data) {
-          setTimeout(() => {
-            writeValue('brightness', data--);
-          }, speed);
-        }
-      } else if (toValue > data) {
-        while (toValue > data) {
-          setTimeout(() => {
-            writeValue('brightness', data++);
-          }, speed);
-        }
-      }
+    if (toValue < data) {
+      let goDown = setInterval(function(){ 
+        if (data > toValue) {
+          writeValue('brightness', data--); 
+        } else {
+          clearInterval(goDown);
+        }                   
+      }, speed);
+    } else if (toValue > data) {
+      let goUp = setInterval(function(){ 
+        if (data < toValue) {
+          writeValue('brightness', data++); 
+        } else {
+          clearInterval(goUp);
+        }                   
+      }, speed);
+    }
   }); 
   
   return "OK";
