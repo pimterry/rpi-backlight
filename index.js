@@ -17,7 +17,7 @@ function readValue(fileName, value) {
     return new Promise((resolve, reject) => {
         var fullPath = path.join(backlightPath, fileName);
         fs.readFile(fullPath, 'utf8', (err, data) => {
-            if (err !== null) reject(err); 
+            if (err !== null) reject(err);
             else resolve(data);
         });
     });
@@ -36,48 +36,58 @@ exports.powerOff = () => {
     return writeValue('bl_power', '1');
 };
 
-exports.isPoweredOn = () => {    
+exports.isPoweredOn = () => {
     return new Promise((resolve, reject) => {
-        readValue('bl_power').then((powerValue) => { 
+        readValue('bl_power').then((powerValue) => {
             resolve(parseInt(powerValue) === 0 ? true : false);
+        }, (err) => {
+            reject(err);
         }); 
-    });     
+    });
 };
 
 /** Brightness managment */
 exports.getBrightness = () => {
     return new Promise((resolve, reject) => {
-        readValue('actual_brightness').then((brightnessValue) => { 
+        readValue('actual_brightness').then((brightnessValue) => {
             resolve(parseInt(brightnessValue));
+        }, (err) => {
+            reject(err);
         }); 
-    });  
+    });
 };
 
 exports.setBrightness = (value) => {
     return new Promise((resolve, reject) => {
-        this.getMaxBrightness().then((maxBrightnessValue) => { 
+        this.getMaxBrightness().then((maxBrightnessValue) => {
             if (value > maxBrightnessValue || value < 0) {
-                return "ERR: Incorrect value";
-            }
-            return writeValue('brightness', value);
-        }); 
-    });       
+                resolve(false);
+            } else {
+                resolve(writeValue('brightness', value));
+            }            
+        }, (err) => {
+            reject(err);
+        });
+    });
 };
 
 exports.getMaxBrightness = () => {
     return new Promise((resolve, reject) => {
         readValue('max_brightness').then((maxBrightnessValue) => {
             resolve(parseInt(maxBrightnessValue));
-        });  
-    }); 
+        }, (err) => {
+            reject(err);
+        });
+    });
 };
 
-exports.setMaxBrightness = () => {    
+exports.setMaxBrightness = () => {
     return new Promise((resolve, reject) => {
         this.getMaxBrightness().then((maxBrightnessValue) => {
             writeValue('brightness', maxBrightnessValue);
             resolve(maxBrightnessValue);
-        });    
-    }); 
+        }, (err) => {
+            reject(err);
+        });
+    });
 };
-

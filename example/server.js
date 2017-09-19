@@ -39,16 +39,23 @@ app.get('/setBrightness/:value', (req, res) => {
         } else if (req.params.value < 0) {
             res.send('ERR: Min value is 0' + '<br><a href="/">Back to home page</a>');
         } else {
-            backlight.setBrightness(req.params.value);
-            res.send('Screen brightness is now: ' + req.params.value + '<br><a href="/">Back to home page</a>');
+            backlight.setBrightness(req.params.value).then(() => {
+                backlight.getBrightness().then((newBrightnessValue) => {
+                    res.send('Screen brightness is now: ' + newBrightnessValue + '<br><a href="/">Back to home page</a>');
+                });                
+            });            
         }
-    });    
+    }); 
 });
 
 app.get('/getMaxBrightness', (req, res) => {
     backlight.getMaxBrightness().then((maxBrightnessValue) => {
         res.send('Brightness max value: ' + maxBrightnessValue + '<br><a href="/">Back to home page</a>');  
-    })     
+    }, (err) => {
+        // For example, response with Json 
+        req.header('application/json');
+        res.send(err);  
+    }); 
 });
 
 app.get('/setMaxBrightness', (req, res) => {
