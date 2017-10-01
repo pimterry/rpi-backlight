@@ -54,12 +54,6 @@ app.get('/getMaxBrightness', (req, res) => {
     }); 
 });
 
-app.get('/setToMaxBrightness', (req, res) => {
-    backlight.setToMaxBrightness().then(backlight.getMaxBrightness().then((maxBrightnessValue) => 
-        res.send('Brightness setted to max value: ' + maxBrightnessValue + '<br><a href="/">Back to home page</a>')
-    ));
-});
-
 /** Server */
 app.listen(3000, () => {
     console.log("server up on port: 3000 !");

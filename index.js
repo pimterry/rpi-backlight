@@ -52,7 +52,3 @@ exports.setBrightness = (value) => {
 exports.getMaxBrightness = () => {
     return readValue('max_brightness').then((maxBrightnessValue) => parseInt(maxBrightnessValue, 10));
 };
-
-exports.setToMaxBrightness = () => {
-    return this.getMaxBrightness().then((maxBrightnessValue) => writeValue('brightness', maxBrightnessValue));
-};
