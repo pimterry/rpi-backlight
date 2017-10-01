@@ -20,7 +20,7 @@ backlight.isPoweredOn();
 backlight.getBrightness();
 backlight.setBrightness(value); // The screen goes Off at <= 9 brightness value
 backlight.getMaxBrightness();
-backlight.setMaxBrightness();
+backlight.setToMaxBrightness();
 ```
 
 ## Coming soon

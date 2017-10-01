@@ -37,57 +37,22 @@ exports.powerOff = () => {
 };
 
 exports.isPoweredOn = () => {
-    return new Promise((resolve, reject) => {
-        readValue('bl_power').then((powerValue) => {
-            resolve(parseInt(powerValue) === 0 ? true : false);
-        }, (err) => {
-            reject(err);
-        }); 
-    });
+    return readValue('bl_power').then((powerValue) => parseInt(powerValue, 10) === 0);
 };
 
 /** Brightness managment */
 exports.getBrightness = () => {
-    return new Promise((resolve, reject) => {
-        readValue('actual_brightness').then((brightnessValue) => {
-            resolve(parseInt(brightnessValue));
-        }, (err) => {
-            reject(err);
-        }); 
-    });
+    return readValue('actual_brightness').then((brightnessValue) => parseInt(brightnessValue, 10));
 };
 
 exports.setBrightness = (value) => {
-    return new Promise((resolve, reject) => {
-        this.getMaxBrightness().then((maxBrightnessValue) => {
-            if (value > maxBrightnessValue || value < 0) {
-                resolve(false);
-            } else {
-                resolve(writeValue('brightness', value));
-            }            
-        }, (err) => {
-            reject(err);
-        });
-    });
+    return this.getMaxBrightness().then((maxBrightnessValue) => writeValue('brightness', value));
 };
 
 exports.getMaxBrightness = () => {
-    return new Promise((resolve, reject) => {
-        readValue('max_brightness').then((maxBrightnessValue) => {
-            resolve(parseInt(maxBrightnessValue));
-        }, (err) => {
-            reject(err);
-        });
-    });
+    return readValue('max_brightness').then((maxBrightnessValue) => parseInt(maxBrightnessValue, 10));
 };
 
-exports.setMaxBrightness = () => {
-    return new Promise((resolve, reject) => {
-        this.getMaxBrightness().then((maxBrightnessValue) => {
-            writeValue('brightness', maxBrightnessValue);
-            resolve(maxBrightnessValue);
-        }, (err) => {
-            reject(err);
-        });
-    });
+exports.setToMaxBrightness = () => {
+    return this.getMaxBrightness().then((maxBrightnessValue) => writeValue('brightness', maxBrightnessValue));
 };
