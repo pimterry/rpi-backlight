@@ -16,6 +16,10 @@ var backlight = require('rpi-backlight');
 
 backlight.powerOn();
 backlight.powerOff();
+backlight.isPoweredOn();
+backlight.getBrightness();
+backlight.setBrightness(value); // The screen goes Off at <= 9 brightness value
+backlight.getMaxBrightness();
 ```
 
 ## Coming soon
