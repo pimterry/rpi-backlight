@@ -1,6 +1,6 @@
 {
   "name": "rpi-backlight",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "A node library to control the backlight of the official Raspberry Pi 7\" touch display",
   "main": "index.js",
   "scripts": {
