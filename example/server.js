@@ -27,31 +27,28 @@ app.get('/isScreenOn', (req, res) => {
 
 app.get('/getBrightness', (req, res) => {
     backlight.getBrightness().then((brightnessValue) => {
-        res.send('Screen brightness: ' + brightnessValue + '<br><a href="/">Back to home page</a>');
+        res.send('Screen brightness: ' + brightnessValue + '%<br><a href="/">Back to home page</a>');
     });    
 });
 
-// The screen goes Off at <= 9 brightness value
-app.get('/setBrightness/:value', (req, res) => {
-    backlight.setBrightness(req.params.value).then(() => {
+// The screen goes Off at <= 3% brightness value
+app.get('/setBrightness/:value/:duration?', (req, res) => {
+    let speed = req.params.duration ? req.params.duration : 0;
+    backlight.setBrightness(req.params.value, speed).then(() => {
         return backlight.getBrightness();
     }).then((newBrightnessValue) => {
-        res.send('Screen brightness is now: ' + newBrightnessValue + '<br><a href="/">Back to home page</a>');
+        if (speed == 0) {
+            res.send('Screen brightness is now: ' + newBrightnessValue + '%<br><a href="/">Back to home page</a>');
+        } else {
+            res.send('Screen brightness is going to: ' + req.params.value + '%<br><a href="/">Back to home page</a>');
+        }        
     }).catch((err) => {
-        backlight.getMaxBrightness().then((maxBrightnessValue) => {
-            if (req.params.value > maxBrightnessValue) {
-                res.send('ERR: Max value is ' + maxBrightnessValue + '<br><a href="/">Back to home page</a>');
-            } else {
-                res.send('ERR: Min value is 0' + '<br><a href="/">Back to home page</a>');
-            }
-        });    
+        if (req.params.value > 100) {
+            res.send('ERR: Max value is 100% <br><a href="/">Back to home page</a>');
+        } else if (req.params.value < 0) {
+            res.send('ERR: Min value is 0% <br><a href="/">Back to home page</a>');
+        }
     });
-});
-
-app.get('/getMaxBrightness', (req, res) => {
-    backlight.getMaxBrightness().then((maxBrightnessValue) => {
-        res.send('Brightness max value: ' + maxBrightnessValue + '<br><a href="/">Back to home page</a>');  
-    }); 
 });
 
 /** Server */
