@@ -12,8 +12,10 @@ npm install --save rpi-backlight
 ```javascript
 var backlight = require('rpi-backlight');
 
-// All methods return promises.
+// Check if the device supports backlight
+var isSupported = backlight.isSupported();
 
+// All methods return promises.
 backlight.powerOn();
 backlight.powerOff();
 backlight.isPoweredOn();
